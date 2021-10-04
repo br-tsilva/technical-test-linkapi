@@ -1,0 +1,44 @@
+{
+  "name": "technical-test-linkapi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:devtsv/technical-test-linkapi.git",
+  "author": "Thiago da Silva <kiezosilva@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start:dev": "tsnd --transpile-only --ignore-watch node_modules -r module-alias/register src/server.ts",
+    "lint": "eslint ./src ./__test__ --ext .ts",
+    "lint:fix": "eslint ./src ./__test__ --ext .ts --fix",
+    "style:check": "prettier --check 'src/**/*.ts' '__test__/**/*.ts'",
+    "style:fix": "prettier --write 'src/**/*.ts' '__test__/**/*.ts'",
+    "test": "jest --projects ./src/__test__ --runInBand",
+    "test:functional": "jest --projects ./__test__ --runInBand"
+  },
+  "_moduleAliases": {
+    "@src": "./src/",
+    "@test": "./__test__/"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "@typescript-eslint/eslint-plugin": "^4.32.0",
+    "@typescript-eslint/parser": "^4.32.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-airbnb-typescript": "^14.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "git-commit-msg-linter": "^3.2.8",
+    "husky": "4",
+    "jest": "^27.2.4",
+    "lint-staged": "^11.2.0",
+    "prettier": "^2.4.1",
+    "supertest": "^6.1.6",
+    "ts-jest": "^27.0.5",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "module-alias": "^2.2.2"
+  }
+}
