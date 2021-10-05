@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import { pipedriveHelper } from '@src/helpers'
 import {
   IPipedriveGetDealsRequest,
@@ -8,7 +8,7 @@ import {
 const pipedriveRest = {
   getAllDeals: (
     rawParameters?: IPipedriveGetDealsRequest,
-  ): Promise<AxiosResponse<IPipedriveGetDealsResponse>> => {
+  ): Promise<IPipedriveGetDealsResponse> => {
     const parameters = rawParameters ?? {}
     const encodedParameters = new URLSearchParams()
 
@@ -18,9 +18,11 @@ const pipedriveRest = {
       '/v1/deals',
       encodedParameters,
     )
-    const request = axios.get(endpoint)
 
-    return request
+    return axios
+      .get(endpoint)
+      .then(({ data }) => data)
+      .catch(({ response }) => response.data)
   },
 }
 

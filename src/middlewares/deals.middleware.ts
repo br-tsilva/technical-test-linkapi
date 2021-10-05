@@ -20,9 +20,14 @@ const getDealsByStatus = async (
   }
 
   const allowedStatus = allowedStatuses[allowedStatusIndexFound]
-  const responseDeals = await pipedriveRest
-    .getAllDeals({ status: allowedStatus })
-    .then((axiosResponse) => axiosResponse.data)
+  const responseDeals = await pipedriveRest.getAllDeals({
+    status: allowedStatus,
+  })
+
+  if (!responseDeals.success) {
+    next(httpHelper.response.error(responseDeals.error))
+    return
+  }
 
   const buildedResponse = httpHelper.response.success(responseDeals.data)
   next(buildedResponse)

@@ -106,9 +106,31 @@ export interface IBlingOrder {
   }
 }
 
+export interface IBlingResponseOrder {
+  pedido: {
+    numero: string
+    idPedido: number
+    codigos_rastreamento: {
+      codigo_rastreamento: string
+    }
+    volumes: [
+      {
+        volume: {
+          servico: string
+          codigoRastreamento: string
+        }
+      }[],
+    ]
+  }
+}
+
+export interface IBlingResponseError {
+  erro: Record<string, unknown>
+}
+
 export interface IBlingCreateOrderResponse {
   retorno: {
-    pedidos: Array<unknown>
-    erros: Array<{ erro: Record<string, unknown> }>
+    pedidos: Array<IBlingResponseOrder>
+    erros: Array<IBlingResponseError>
   }
 }

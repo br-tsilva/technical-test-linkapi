@@ -3,8 +3,14 @@ import {
   IPipedriveGetDealsRequest,
   IPipedriveGetDealsResponse,
   PipedriveDealStatus,
+  IPipedriveResponseDeal,
 } from './IPipedrive'
-import { IBlingOrder, IBlingCreateOrderResponse } from './IBling'
+import {
+  IBlingOrder,
+  IBlingCreateOrderResponse,
+  IBlingResponseOrder,
+  IBlingResponseError,
+} from './IBling'
 
 export {
   IResponse,
@@ -12,6 +18,9 @@ export {
   IPipedriveGetDealsRequest,
   IPipedriveGetDealsResponse,
   PipedriveDealStatus,
+  IPipedriveResponseDeal,
   IBlingOrder,
   IBlingCreateOrderResponse,
+  IBlingResponseOrder,
+  IBlingResponseError,
 }
