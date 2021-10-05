@@ -12,7 +12,11 @@
     "style:check": "prettier --check 'src/**/*.ts' '__test__/**/*.ts'",
     "style:fix": "prettier --write 'src/**/*.ts' '__test__/**/*.ts'",
     "test": "jest --projects ./src/__test__ --runInBand",
-    "test:functional": "jest --projects ./__test__ --runInBand"
+    "test:functional": "jest --projects ./__test__ --runInBand",
+    "typeorm": "tsnd -r module-alias/register -r dotenv/config node_modules/typeorm/cli.js --config src/database/typeorm/ormconfig.ts",
+    "gen-migration": "npm run typeorm -- migration:generate -n",
+    "run-migrations": "npm run typeorm migration:run",
+    "undo-migrations": "npm run typeorm migration:revert"
   },
   "_moduleAliases": {
     "@src": "./src/",
@@ -51,7 +55,10 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "module-alias": "^2.2.2",
-    "mongoose": "^6.0.9",
+    "mongodb": "^3.7.0",
+    "mysql2": "^2.3.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.38",
     "xml2js": "^0.4.23"
   }
 }

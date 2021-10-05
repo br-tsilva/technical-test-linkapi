@@ -1,5 +1,21 @@
-interface IMongoDBOptions {
+interface IMongoOptions {
   type: 'mongodb'
+  url: string
+  host: string
+  port: number
+  database: string
+  username: string
+  password: string
+  useUnifiedTopology: boolean
+  writeConcern: {
+    w: string
+    wtimeout: number
+    j: boolean
+  }
+}
+
+interface IMySQLOptions {
+  type: 'mysql'
   url: string
   host: string
   port: number
@@ -9,5 +25,6 @@ interface IMongoDBOptions {
 }
 
 export interface IDatabaseOptions {
-  mongodb: IMongoDBOptions
+  mongodb: IMongoOptions
+  mysql: IMySQLOptions
 }

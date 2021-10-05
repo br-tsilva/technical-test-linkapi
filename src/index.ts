@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import 'reflect-metadata'
 import express, { Express } from 'express'
 import cors from 'cors'
 import database from '@src/database'
