@@ -1,4 +1,5 @@
 import { IResponse, ResponseStatus } from './IResponse'
+import { IDatabaseOptions } from './IDatabase'
 import {
   IPipedriveGetDealsRequest,
   IPipedriveGetDealsResponse,
@@ -14,6 +15,7 @@ import {
 
 export {
   IResponse,
+  IDatabaseOptions,
   ResponseStatus,
   IPipedriveGetDealsRequest,
   IPipedriveGetDealsResponse,
