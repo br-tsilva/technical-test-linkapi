@@ -1,3 +1,3 @@
-import instance from './typeorm'
+import instance from './mongoose'
 
 export default instance

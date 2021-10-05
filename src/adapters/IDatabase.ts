@@ -1,7 +1,9 @@
 interface IMongoDBOptions {
   type: 'mongodb'
-  database: string
+  url: string
+  host: string
   port: number
+  database: string
   username: string
   password: string
 }

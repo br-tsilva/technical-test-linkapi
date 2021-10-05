@@ -1,5 +1,7 @@
-import express from 'express'
+/* eslint-disable no-console */
+import express, { Express } from 'express'
 import cors from 'cors'
+import database from '@src/database'
 import { router } from '@src/routes'
 import { responseHandler } from '@src/middlewares/response.middleware'
 
@@ -10,4 +12,11 @@ app.use(cors())
 app.use('/', router)
 app.use(responseHandler)
 
-export { app }
+export default {
+  start: (): Promise<Express> =>
+    Promise.all([database()]).then(async () => {
+      console.log('Connected with database')
+
+      return app
+    }),
+}
