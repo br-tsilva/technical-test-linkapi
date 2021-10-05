@@ -8,32 +8,25 @@ import {
   DeleteDateColumn,
 } from 'typeorm'
 
-interface IOrganizations {
-  orgId: string
-  name: string
-  contactPerson: string
-}
-
-interface IItems {
-  itemId: string
-  description: string
-  currency: string
-  value: number
-}
-
 @Entity('orders')
 export default class Orders {
   @ObjectIdColumn()
   id: ObjectID
 
   @Column()
-  orderId: string
+  dealId: string
 
   @Column()
-  customer: IOrganizations
+  dealName: string
 
   @Column()
-  items: IItems[]
+  contactPerson: string
+
+  @Column()
+  currency: string
+
+  @Column()
+  value: number
 
   @CreateDateColumn()
   createdAt: Date

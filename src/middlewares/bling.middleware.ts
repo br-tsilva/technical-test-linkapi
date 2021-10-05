@@ -8,6 +8,8 @@ import {
   IBlingResponseError,
 } from '@src/adapters'
 import { httpHelper, blingHelper } from '@src/helpers'
+import { getMongoManager } from 'typeorm'
+import Orders from '@src/database/typeorm/models/Orders'
 
 const createOrdersInBlingApi = async (
   orders: IBlingOrder[],
@@ -16,7 +18,10 @@ const createOrdersInBlingApi = async (
     success: Array<IBlingResponseOrder>
     fail: Array<IBlingResponseError>
   },
-): Promise<Record<string, unknown>> => {
+): Promise<{
+  success: Array<IBlingResponseOrder>
+  fail: Array<IBlingResponseError>
+}> => {
   if (index >= orders.length) return statuses
 
   const order = orders[index]
@@ -43,6 +48,7 @@ const createOrdersFromWonDeals = async (
   _response: Response,
   next: NextFunction,
 ): Promise<void> => {
+  const mongoManager = getMongoManager()
   const responseDeals = await pipedriveRest.getAllDeals({
     status: PipedriveDealStatus.WON,
   })
@@ -67,6 +73,20 @@ const createOrdersFromWonDeals = async (
     success: [],
     fail: [],
   })
+
+  if (!ordersSent.fail.length) {
+    const serializedOrdersToInsertOnDatabase = responseDeals.data.map((deal) =>
+      mongoManager.create(Orders, {
+        dealId: String(deal.id),
+        dealName: deal.title,
+        contactPerson: deal.person_name,
+        currency: deal.currency,
+        value: Number(deal.value),
+      }),
+    )
+
+    await mongoManager.save(Orders, serializedOrdersToInsertOnDatabase)
+  }
 
   const buildedResponse = httpHelper.response.success(ordersSent)
   next(buildedResponse)
