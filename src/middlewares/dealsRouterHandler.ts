@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express'
-import { getAllDeals } from '@src/services/pipedriveRest'
-import { responses } from '@src/helpers'
+import { pipedriveRest } from '@src/services/pipedrive.service'
+import { httpHelper } from '@src/helpers'
 import { PipedriveDealStatus } from '@src/adapters'
 
-const getDeals = async (
+const getDealsByStatus = async (
   request: Request,
   _response: Response,
   next: NextFunction,
@@ -15,17 +15,17 @@ const getDeals = async (
   )
 
   if (status && allowedStatusIndexFound < 0) {
-    next(responses.error('The status entered is invalid', 400))
+    next(httpHelper.response.error('The status entered is invalid', 400))
     return
   }
 
   const allowedStatus = allowedStatuses[allowedStatusIndexFound]
-  const responseDeals = await getAllDeals({ status: allowedStatus }).then(
-    (axiosResponse) => axiosResponse.data,
-  )
+  const responseDeals = await pipedriveRest
+    .getAllDeals({ status: allowedStatus })
+    .then((axiosResponse) => axiosResponse.data)
 
-  const buildedResponse = responses.success(responseDeals.data)
+  const buildedResponse = httpHelper.response.success(responseDeals.data)
   next(buildedResponse)
 }
 
-export { getDeals }
+export default { getDealsByStatus }

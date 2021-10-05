@@ -1,3 +1,3 @@
-import { convertObjectToXml } from './convertObjectToXml'
+import { convertObjectToXml } from './convertObjectToXml.util'
 
 export { convertObjectToXml }

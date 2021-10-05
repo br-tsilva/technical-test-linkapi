@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import { router } from '@src/routes'
-import { responseHandler } from '@src/middlewares/responseHandler'
+import { responseHandler } from '@src/middlewares/response.middleware'
 
 const app = express()
 

@@ -1,4 +1,4 @@
-import { pipedrive } from './pipedrive'
-import { responses } from './responses'
+import { pipedriveHelper } from './pipedrive.helper'
+import { httpHelper } from './http.helper'
 
-export { pipedrive, responses }
+export { pipedriveHelper, httpHelper }
