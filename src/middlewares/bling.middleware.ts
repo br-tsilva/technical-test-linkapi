@@ -54,7 +54,9 @@ const createOrdersFromWonDeals = async (
   if (!responseDeals.data) {
     next(
       httpHelper.response.success(
-        `There are no deals with status ${PipedriveDealStatus.WON} to be created as orders`,
+        undefined,
+        undefined,
+        `There are no deals with ${PipedriveDealStatus.WON} status to be created as orders`,
       ),
     )
     return
