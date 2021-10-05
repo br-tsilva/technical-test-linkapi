@@ -53,9 +53,8 @@ const createOrdersFromWonDeals = async (
   }
   if (!responseDeals.data) {
     next(
-      httpHelper.response.error(
+      httpHelper.response.success(
         `There are no deals with status ${PipedriveDealStatus.WON} to be created as orders`,
-        404,
       ),
     )
     return

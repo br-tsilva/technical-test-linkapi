@@ -1,7 +1,7 @@
-import { IBlingOrder, IPipedriveDeal } from '@src/adapters'
+import { IBlingOrder, IPipedriveResponseDeal } from '@src/adapters'
 
 const blingHelper = {
-  buildOrdersFromDeals: (deals: IPipedriveDeal[]): IBlingOrder[] => {
+  buildOrdersFromDeals: (deals: IPipedriveResponseDeal[]): IBlingOrder[] => {
     const newOrders: IBlingOrder[] = deals.map((deal) => ({
       pedido: {
         cliente: {
