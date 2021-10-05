@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import dealsMiddleware from '@src/middlewares/dealsRouterHandler'
+import dealsMiddleware from '@src/middlewares/deals.middleware'
 
 const router = Router()
 
