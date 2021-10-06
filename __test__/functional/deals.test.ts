@@ -1,5 +1,5 @@
 import supertest from 'supertest'
-import server from '@src/index'
+import server from '@src/presentation/http'
 
 describe('Functional: Pipedrive', () => {
   it('should return status 200 accessing GET /deals/:status', async () => {

@@ -12,11 +12,7 @@
     "style:check": "prettier --check 'src/**/*.ts' '__test__/**/*.ts'",
     "style:fix": "prettier --write 'src/**/*.ts' '__test__/**/*.ts'",
     "test": "jest --projects ./src/__test__ --runInBand",
-    "test:functional": "jest --projects ./__test__ --runInBand",
-    "typeorm": "tsnd -r module-alias/register -r dotenv/config node_modules/typeorm/cli.js --config src/database/typeorm/ormconfig.ts",
-    "gen-migration": "npm run typeorm -- migration:generate -n",
-    "run-migrations": "npm run typeorm migration:run",
-    "undo-migrations": "npm run typeorm migration:revert"
+    "test:functional": "jest --projects ./__test__ --runInBand"
   },
   "_moduleAliases": {
     "@src": "./src/",
