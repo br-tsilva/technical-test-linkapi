@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { router as dealsRouter } from '../presentetion/http/deals/deals.route'
-import { router as blingRouter } from '../presentetion/http/bling/bling.route'
+import { router as dealsRouter } from './deals/deals.route'
+import { router as blingRouter } from './bling/bling.route'
 
 const router = Router()
 

@@ -8,7 +8,7 @@ import { getMongoManager } from 'typeorm'
 import { Orders } from '@src/infra/repositories'
 
 interface ICreateOrdersInBlingApiStatuses {
-  success: Array<IBlingResponseOrder>
+  success: Array<{ deal: IBlingOrder; response: IBlingResponseOrder }>
   fail: Array<IBlingResponseError>
 }
 
@@ -29,7 +29,7 @@ const createOrdersInBlingApi = async (
         return
       }
 
-      statuses.success.push(blingResponse.retorno.pedidos[0])
+      statuses.success.push({ deal: order, response: blingResponse.retorno.pedidos[0] })
     })
     .catch((blingResponse) => {
       statuses.fail.push(blingResponse.retorno.erros[0])
@@ -66,16 +66,15 @@ const createOrdersFromWonDeals = async (_request: Request, _response: Response, 
   })
 
   if (!createdBlingOrders.fail.length) {
-    const serializedOrdersToInsertOnDatabase = responseDeals.data.map((deal) =>
+    const serializedOrdersToInsertOnDatabase = createdBlingOrders.success.map((order) =>
       mongoManager.create(Orders, {
-        dealId: String(deal.id),
-        dealName: deal.title,
-        contactPerson: deal.person_name,
-        currency: deal.currency,
-        value: Number(deal.value),
+        orderId: order.response.pedido.idPedido,
+        dealId: String(order.deal.pedido.itens.item[0].codigo),
+        dealName: order.deal.pedido.itens.item[0].descricao,
+        contactPerson: order.deal.pedido.cliente.nome,
+        value: order.deal.pedido.itens.item[0].vlr_unit,
       }),
     )
-
     await mongoManager.save(Orders, serializedOrdersToInsertOnDatabase)
   }
 

@@ -6,7 +6,9 @@
   "author": "Thiago da Silva <kiezosilva@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start:dev": "NODE_ENV=development tsnd --transpile-only --ignore-watch node_modules -r module-alias/register -r dotenv/config src/server.ts",
+    "build": "tsc",
+    "start:dev": "tsnd --transpile-only --ignore-watch node_modules -r module-alias/register -r dotenv/config src/presentation/http/server.ts",
+    "start": "node -r module-alias/register -r dotenv/config dist/presentation/http/server.js",
     "lint": "eslint ./src ./__test__ --ext .ts",
     "lint:fix": "eslint ./src ./__test__ --ext .ts --fix",
     "style:check": "prettier --check 'src/**/*.ts' '__test__/**/*.ts'",

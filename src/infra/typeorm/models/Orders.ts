@@ -6,6 +6,9 @@ export default class Orders {
   id: ObjectID
 
   @Column()
+  orderId: number
+
+  @Column()
   dealId: string
 
   @Column()
@@ -13,9 +16,6 @@ export default class Orders {
 
   @Column()
   contactPerson: string
-
-  @Column()
-  currency: string
 
   @Column()
   value: number
