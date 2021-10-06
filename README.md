@@ -42,6 +42,7 @@ Para executar este projeto em sua máquina, siga os passos abaixo:
 - Abra o projeto com um `Editor de Texto`. Recomendado: `VSCode`.
 - Abra o console do editor de texto e execute o comando `npm install yarn` para instalar o gerenciador de pacotes Yarn através do NPM do NodeJS.
 - Crie o arquivo `.env` na raiz do projeto, em seguida copie tudo o que estiver dentro do arquivo `.env.example`, cole em `.env` e configure preenchendo os dados.
+- Execute o comando `yarn install` para instalar as dependências do projeto.
 - Execute o comando `yarn build` para o Typescript compilar-se a Javascript, para modo `produção`. Uma pasta nomeada `dist` será criada na raiz do projeto. `ATENÇÃO`, sempre que executar este comando, certifique-se de que a pasta `dist` esteja deletada, afim de evitar conflitos.
 - Execute o comando `yarn start` para ligar o servidor. O serviço será escutado na porta definida no arquivo `.env` em `SERVER_PORT`, caso este não esteja informado, a porta padrão será a `3000`.
 - Para executar o servidor em modo `desenvolvimento` com Typescript, execute o comando `yarn start:dev`.
