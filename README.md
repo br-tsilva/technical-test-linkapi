@@ -68,13 +68,13 @@ Sane suas dúvidas sobre as propriedades do arquivo em tópico
 ##### Capturas de tela
 
 Negócios criados e definidos com status `Ganho`
-![pipedrive](https://github.com/devtsv/technical-test-linkapi/blob/master/assets/screenhost-pipedrive.png 'pipedrive')
+![pipedrive](https://github.com/devtsv/technical-test-linkapi/blob/master/assets/screenshot-pipedrive.png 'pipedrive')
 
 Negócios criados como pedidos, utilizando somente dados necessários.
-![bling](https://github.com/devtsv/technical-test-linkapi/blob/master/assets/screenhost-bling.png 'bling')
+![bling](https://github.com/devtsv/technical-test-linkapi/blob/master/assets/screenshot-bling.png 'bling')
 
 Coleção contento o `valor total` dos pedidos inseridos no Bling, agregados pela `data`
-![mongoatlas](https://github.com/devtsv/technical-test-linkapi/blob/master/assets/screenhost-mongoatlas.png 'mongoatlas')
+![mongoatlas](https://github.com/devtsv/technical-test-linkapi/blob/master/assets/screenshot-mongoatlas.png 'mongoatlas')
 
 ##### Rotas
 
