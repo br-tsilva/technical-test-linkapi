@@ -82,4 +82,36 @@ const createOrdersFromWonDeals = async (_request: Request, _response: Response, 
   next(buildedResponse)
 }
 
-export default { createOrdersFromWonDeals }
+const aggregateOrders = async (_request: Request, _response: Response, next: NextFunction): Promise<void> => {
+  const mongoManager = getMongoManager()
+  const orders = await mongoManager.find(Orders)
+  const valuesByDate = orders.map((order) => ({
+    date: order.createdAt.toLocaleDateString(),
+    value: order.value,
+  }))
+  const reducedValuesByDate = (function recursive(
+    arrayValues: Array<{ date: string; value: number }>,
+    index: number,
+    aggregate: Array<{ date: string; totalValue: number }>,
+  ): Array<{ date: string; totalValue: number }> {
+    if (index >= arrayValues.length) return aggregate
+
+    const current = arrayValues[index]
+    const dateIsAlreadyInserted = aggregate.find(({ date }) => date === current.date)
+
+    if (!dateIsAlreadyInserted) {
+      const totalValue = arrayValues
+        .filter((currentValue) => currentValue.date === current.date)
+        .reduce((accumulate, currentValue) => accumulate + currentValue.value, 0)
+
+      aggregate.push({ date: current.date, totalValue })
+    }
+
+    return recursive(arrayValues, index + 1, aggregate)
+  })(valuesByDate, 0, [])
+
+  const buildedResponse = httpHelper.response.success({ sumValuesByDate: reducedValuesByDate, orders })
+  next(buildedResponse)
+}
+
+export default { aggregateOrders, createOrdersFromWonDeals }
