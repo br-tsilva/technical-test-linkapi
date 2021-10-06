@@ -49,13 +49,8 @@ const createOrdersFromWonDeals = async (_request: Request, _response: Response, 
     return
   }
   if (!responseDeals.data) {
-    next(
-      httpHelper.response.success(
-        undefined,
-        undefined,
-        `There are no deals with ${PipedriveDealStatus.WON} status to be created as orders`,
-      ),
-    )
+    const responseMessage = `There are no deals with ${PipedriveDealStatus.WON} status to be created as orders`
+    next(httpHelper.response.success(undefined, undefined, responseMessage))
     return
   }
 
@@ -66,32 +61,46 @@ const createOrdersFromWonDeals = async (_request: Request, _response: Response, 
   })
 
   if (!createdBlingOrders.fail.length) {
-    const valuesByDate = createdBlingOrders.success.map((order) => ({
-      date: order.deal.pedido.data.toLocaleDateString(),
-      value: order.deal.pedido.itens.item[0].vlr_unit,
-    }))
-    const reducedValuesByDate = (function recursive(
-      arrayValues: Array<{ date: string; value: number }>,
+    const totalValueByDate = createdBlingOrders.success
+      .map((order, _index, vector) => {
+        const totalValue = vector.reduce((accumulate, target) => {
+          if (target.deal.pedido.data.toLocaleDateString() === order.deal.pedido.data.toLocaleDateString()) {
+            return accumulate + order.deal.pedido.itens.item[0].vlr_unit
+          }
+          return accumulate + 0
+        }, 0)
+
+        return {
+          date: order.deal.pedido.data.toLocaleDateString(),
+          totalValue,
+        }
+      })
+      .filter((target, index, vector) => {
+        if (vector.findIndex(({ date }) => date === target.date) < index) {
+          return true
+        }
+
+        return false
+      })
+
+    await (async function recursive(
+      arrayValues: Array<{ date: string; totalValue: number }>,
       index: number,
-      aggregate: Array<{ date: string; totalValue: number }>,
-    ): Array<{ date: string; totalValue: number }> {
-      if (index >= arrayValues.length) return aggregate
+    ): Promise<null> {
+      if (index >= arrayValues.length) return null
 
-      const current = arrayValues[index]
-      const dateIsAlreadyInserted = aggregate.find(({ date }) => date === current.date)
+      const target = arrayValues[index]
+      const orderOnThisDate = await mongoManager.findOne(Orders, { where: { date: target.date } })
 
-      if (!dateIsAlreadyInserted) {
-        const totalValue = arrayValues
-          .filter((currentValue) => currentValue.date === current.date)
-          .reduce((accumulate, currentValue) => accumulate + currentValue.value, 0)
-
-        aggregate.push({ date: current.date, totalValue })
+      if (orderOnThisDate) {
+        const totalValue = orderOnThisDate.totalValue + target.totalValue
+        await mongoManager.update(Orders, { date: target.date }, { totalValue })
+      } else {
+        await mongoManager.save(Orders, target)
       }
 
-      return recursive(arrayValues, index + 1, aggregate)
-    })(valuesByDate, 0, [])
-
-    await mongoManager.save(Orders, reducedValuesByDate)
+      return recursive(arrayValues, index + 1)
+    })(totalValueByDate, 0)
   }
 
   const buildedResponse = httpHelper.response.success(createdBlingOrders)
