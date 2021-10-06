@@ -1,3 +1,3 @@
-import instance from '@src/infra/typeorm'
+import instance from '@infra/typeorm'
 
 export default instance

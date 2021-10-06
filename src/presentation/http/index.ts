@@ -2,9 +2,9 @@
 import 'reflect-metadata'
 import express, { Express } from 'express'
 import cors from 'cors'
-import database from '@src/infra/services/database.service'
-import { router } from '@src/presentation/http/routes'
-import { responseHandler } from '@src/presentation/http/response/response.middleware'
+import database from '@infra/services/database.service'
+import { router } from '@presentation/http/routes'
+import { responseHandler } from '@presentation/http/response/response.middleware'
 
 const app = express()
 

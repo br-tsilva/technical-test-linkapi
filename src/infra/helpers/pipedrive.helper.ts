@@ -1,4 +1,4 @@
-import { constants } from '@src/app/constants'
+import { constants } from '@app/constants'
 
 const {
   pipedrive: { companyName, apiToken },
@@ -10,10 +10,7 @@ const pipedriveHelper = {
 
     parameters.append('api_token', apiToken)
 
-    return (
-      `https://${companyName}.pipedrive.com` +
-      `/api${newEndpoint}?${parameters}`
-    )
+    return `https://${companyName}.pipedrive.com/api${newEndpoint}?${parameters}`
   },
 }
 

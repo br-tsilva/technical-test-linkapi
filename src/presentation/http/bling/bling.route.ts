@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import blingController from '@src/presentation/http/bling/bling.controller'
+import blingController from '@presentation/http/bling/bling.controller'
 
 const router = Router()
 

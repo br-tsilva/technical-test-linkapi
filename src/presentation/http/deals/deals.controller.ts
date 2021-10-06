@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
-import { pipedriveRest } from '@src/infra/services/pipedrive.service'
-import { PipedriveDealStatus } from '@src/infra/interfaces'
-import { httpHelper } from '@src/presentation/helpers'
+import { pipedriveRest } from '@infra/services/pipedrive.service'
+import { PipedriveDealStatus } from '@infra/interfaces'
+import { httpHelper } from '@presentation/helpers'
 
 const getDealsByStatus = async (request: Request, _response: Response, next: NextFunction): Promise<void> => {
   const { status } = request.params

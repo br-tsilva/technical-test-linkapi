@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { IBlingOrder, IBlingCreateOrderResponse } from '@src/infra/interfaces'
-import { constants } from '@src/app/constants'
-import { convertObjectToXml } from '@src/app/utils'
+import { IBlingOrder, IBlingCreateOrderResponse } from '@infra/interfaces'
+import { constants } from '@app/constants'
+import { convertObjectToXml } from '@app/utils'
 
 const {
   bling: { host, apiToken },

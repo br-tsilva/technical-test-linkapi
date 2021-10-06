@@ -1,5 +1,5 @@
-import { IDatabaseOptions } from '@src/infra/interfaces'
-import { constants } from '@src/app/constants'
+import { IDatabaseOptions } from '@infra/interfaces'
+import { constants } from '@app/constants'
 
 const {
   database: { mongoHost, mongoName, mongoPassword, mongoPort, mongoUser },

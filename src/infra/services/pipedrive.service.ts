@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { pipedriveHelper } from '@src/infra/helpers'
-import { IPipedriveGetDealsRequest, IPipedriveGetDealsResponse } from '@src/infra/interfaces'
+import { pipedriveHelper } from '@infra/helpers'
+import { IPipedriveGetDealsRequest, IPipedriveGetDealsResponse } from '@infra/interfaces'
 
 const pipedriveRest = {
   getAllDeals: (rawParameters?: IPipedriveGetDealsRequest): Promise<IPipedriveGetDealsResponse> => {

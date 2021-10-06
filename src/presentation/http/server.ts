@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import server from '@src/presentation/http'
+import server from '@presentation/http'
 
 const { SERVER_PORT } = process.env
 

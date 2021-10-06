@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express'
-import { pipedriveRest } from '@src/infra/services/pipedrive.service'
-import { blingRest } from '@src/infra/services/bling.service'
-import { PipedriveDealStatus, IBlingOrder, IBlingResponseOrder, IBlingResponseError } from '@src/infra/interfaces'
-import { blingHelper } from '@src/infra/helpers'
-import { httpHelper } from '@src/presentation/helpers'
+import { pipedriveRest } from '@infra/services/pipedrive.service'
+import { blingRest } from '@infra/services/bling.service'
+import { PipedriveDealStatus, IBlingOrder, IBlingResponseOrder, IBlingResponseError } from '@infra/interfaces'
+import { blingHelper } from '@infra/helpers'
+import { httpHelper } from '@presentation/helpers'
 import { getMongoManager } from 'typeorm'
-import { Orders } from '@src/infra/repositories'
+import { Orders } from '@infra/repositories'
 
 interface ICreateOrdersInBlingApiStatuses {
   success: Array<{ deal: IBlingOrder; response: IBlingResponseOrder }>

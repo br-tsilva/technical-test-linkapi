@@ -1,3 +1,3 @@
-import Orders from '@src/infra/typeorm/models/Orders'
+import Orders from '@infra/typeorm/models/Orders'
 
 export { Orders }

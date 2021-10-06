@@ -1,4 +1,4 @@
-import { IResponse, ResponseStatus } from '@src/presentation/interfaces'
+import { IResponse, ResponseStatus } from '@presentation/interfaces'
 
 const httpHelper = {
   response: {

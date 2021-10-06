@@ -1,4 +1,4 @@
-import { config } from '@src/infra/config'
+import { config } from '@infra/config'
 import path from 'path'
 
 const { mongodb } = config.database

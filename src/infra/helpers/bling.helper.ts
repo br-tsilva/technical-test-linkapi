@@ -1,4 +1,4 @@
-import { IBlingOrder, IPipedriveResponseDeal } from '@src/infra/interfaces'
+import { IBlingOrder, IPipedriveResponseDeal } from '@infra/interfaces'
 
 const blingHelper = {
   buildOrdersFromDeals: (deals: IPipedriveResponseDeal[]): IBlingOrder[] => {
