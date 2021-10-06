@@ -3,7 +3,7 @@ import blingController from '@presentation/http/bling/bling.controller'
 
 const router = Router()
 
-router.get('/aggregateOrders', blingController.aggregateOrders)
+router.get('/orders', blingController.getOrders)
 router.post('/wonDeals', blingController.createOrdersFromWonDeals)
 
 export { router }

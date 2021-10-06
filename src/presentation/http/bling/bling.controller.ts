@@ -66,52 +66,44 @@ const createOrdersFromWonDeals = async (_request: Request, _response: Response, 
   })
 
   if (!createdBlingOrders.fail.length) {
-    const serializedOrdersToInsertOnDatabase = createdBlingOrders.success.map((order) =>
-      mongoManager.create(Orders, {
-        orderId: order.response.pedido.idPedido,
-        dealId: String(order.deal.pedido.itens.item[0].codigo),
-        dealName: order.deal.pedido.itens.item[0].descricao,
-        contactPerson: order.deal.pedido.cliente.nome,
-        value: order.deal.pedido.itens.item[0].vlr_unit,
-      }),
-    )
-    await mongoManager.save(Orders, serializedOrdersToInsertOnDatabase)
+    const valuesByDate = createdBlingOrders.success.map((order) => ({
+      date: order.deal.pedido.data.toLocaleDateString(),
+      value: order.deal.pedido.itens.item[0].vlr_unit,
+    }))
+    const reducedValuesByDate = (function recursive(
+      arrayValues: Array<{ date: string; value: number }>,
+      index: number,
+      aggregate: Array<{ date: string; totalValue: number }>,
+    ): Array<{ date: string; totalValue: number }> {
+      if (index >= arrayValues.length) return aggregate
+
+      const current = arrayValues[index]
+      const dateIsAlreadyInserted = aggregate.find(({ date }) => date === current.date)
+
+      if (!dateIsAlreadyInserted) {
+        const totalValue = arrayValues
+          .filter((currentValue) => currentValue.date === current.date)
+          .reduce((accumulate, currentValue) => accumulate + currentValue.value, 0)
+
+        aggregate.push({ date: current.date, totalValue })
+      }
+
+      return recursive(arrayValues, index + 1, aggregate)
+    })(valuesByDate, 0, [])
+
+    await mongoManager.save(Orders, reducedValuesByDate)
   }
 
   const buildedResponse = httpHelper.response.success(createdBlingOrders)
   next(buildedResponse)
 }
 
-const aggregateOrders = async (_request: Request, _response: Response, next: NextFunction): Promise<void> => {
+const getOrders = async (_request: Request, _response: Response, next: NextFunction): Promise<void> => {
   const mongoManager = getMongoManager()
   const orders = await mongoManager.find(Orders)
-  const valuesByDate = orders.map((order) => ({
-    date: order.createdAt.toLocaleDateString(),
-    value: order.value,
-  }))
-  const reducedValuesByDate = (function recursive(
-    arrayValues: Array<{ date: string; value: number }>,
-    index: number,
-    aggregate: Array<{ date: string; totalValue: number }>,
-  ): Array<{ date: string; totalValue: number }> {
-    if (index >= arrayValues.length) return aggregate
 
-    const current = arrayValues[index]
-    const dateIsAlreadyInserted = aggregate.find(({ date }) => date === current.date)
-
-    if (!dateIsAlreadyInserted) {
-      const totalValue = arrayValues
-        .filter((currentValue) => currentValue.date === current.date)
-        .reduce((accumulate, currentValue) => accumulate + currentValue.value, 0)
-
-      aggregate.push({ date: current.date, totalValue })
-    }
-
-    return recursive(arrayValues, index + 1, aggregate)
-  })(valuesByDate, 0, [])
-
-  const buildedResponse = httpHelper.response.success({ sumValuesByDate: reducedValuesByDate, orders })
+  const buildedResponse = httpHelper.response.success({ orders })
   next(buildedResponse)
 }
 
-export default { aggregateOrders, createOrdersFromWonDeals }
+export default { getOrders, createOrdersFromWonDeals }

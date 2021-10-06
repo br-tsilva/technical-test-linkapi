@@ -1,13 +1,16 @@
 /* eslint-disable no-console */
 import server from '@presentation/http'
+import { constants } from '@app/constants'
 
-const { SERVER_PORT } = process.env
+const {
+  server: { serverPort },
+} = constants
 
 server
   .start()
   .then((app) => {
-    app.listen(SERVER_PORT || 3000, () => {
-      console.log(`Server's running on port ${SERVER_PORT || 3000}`)
+    app.listen(serverPort, () => {
+      console.log(`Server's running on port ${serverPort}`)
     })
   })
   .catch(console.error)

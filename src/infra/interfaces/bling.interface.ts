@@ -83,7 +83,7 @@ export interface IBlingOrderIntermediary {
 
 export interface IBlingOrder {
   pedido: {
-    data?: Date
+    data: Date
     data_saida?: Date
     data_prevista?: Date
     numero?: string

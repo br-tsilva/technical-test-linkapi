@@ -6,19 +6,10 @@ export default class Orders {
   id: ObjectID
 
   @Column()
-  orderId: number
+  date: string
 
   @Column()
-  dealId: string
-
-  @Column()
-  dealName: string
-
-  @Column()
-  contactPerson: string
-
-  @Column()
-  value: number
+  totalValue: number
 
   @CreateDateColumn()
   createdAt: Date

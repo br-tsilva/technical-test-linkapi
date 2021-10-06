@@ -7,6 +7,7 @@ const blingHelper = {
         cliente: {
           nome: deal.person_id.name,
         },
+        data: new Date(),
         itens: {
           item: [
             {
